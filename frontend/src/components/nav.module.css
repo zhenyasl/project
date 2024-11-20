@@ -1,8 +1,8 @@
 .navbar {
     height: 56px;
-    background-color:#F0F8FF; /* Темносеросиний фон */
+    background-color: #f0f8ff;
     display: flex;
-    /* justify-content: center; Центрирование элементов */
+    /* justify-content: center; 
     /* align-items: center; */
     border-bottom: 1px solid #ccc;
 }
@@ -21,28 +21,28 @@
     margin-top: 5px;
     padding: 0px 5px; */
     border-radius: 35px;
-    transition: background-color 0.3s ease; /* Плавный переход */
+    transition: background-color 0.3s ease;
     cursor: pointer;
-    display: flex; /* Чтобы поддерживать flexbox */
-    align-items: center; /* Центрирование по вертикали */
-     /*Центрирование по горизонтали, если нужно */
+    display: flex;
+    align-items: center;
     /* width:115px;
     height:50px; */
 }
-.createPostButton:hover, .createPostButton:focus-within {
-    background-color: #d3d3d3; /* Изменение цвета при наведении */
+.createPostButton:hover,
+.createPostButton:focus-within {
+    background-color: #d3d3d3;
 }
 .navbarNav {
     display: flex;
     align-items: center;
-    margin : 0px;
+    margin: 0px;
     padding: 0;
-    margin-left:auto;
+    margin-left: auto;
 }
 
 .navLink {
     text-decoration: none;
-    color: rgb(0, 0, 0); /* Белый цвет для текста кнопок */
+    color: rgb(0, 0, 0);
     font-weight: bold;
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;

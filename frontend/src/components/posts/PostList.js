@@ -1,15 +1,14 @@
-import React from 'react';
-import PostItem from './PostItem';
-import styles from './PostList.module.css';
+import React from "react";
+import PostItem from "./PostItem";
+import styles from "./PostList.module.css";
 
 const PostList = ({ posts, onUpdate }) => {
-
     const handlePostDelete = () => {
         onUpdate();
     };
 
     return (
-        <div >
+        <div>
             {posts.map((post) => (
                 <PostItem
                     key={post.id}

@@ -3,18 +3,15 @@
     flex-direction: row;
     background-color: rgb(247, 247, 247);
     min-height: 100vh;
-   
-    /* border-top:1px black; */
 }
 
 .content {
-    margin-top: 0px; /* Высота навигационного бара */
-    margin-left: 300px; /* Ширина сайдбара */
-    padding: 20px; /* Отступы для основного контента */
-    flex-grow: 1; /* Контент растягивается на оставшееся пространство */
-    
+    margin-top: 0px;
+    margin-left: 300px;
+    padding: 20px;
+    flex-grow: 1;
 }
 
 .sidebar {
-    width: 150px; /* Ширина сайдбара */
+    width: 150px;
 }

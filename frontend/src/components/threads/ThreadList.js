@@ -1,8 +1,8 @@
-import React from 'react';
-import ThreadItem from './ThreadItem';
-import styles from './ThreadList.module.css';
+import React from "react";
+import ThreadItem from "./ThreadItem";
+import styles from "./ThreadList.module.css";
 
-const ThreadList = ({threads }) => {
+const ThreadList = ({ threads }) => {
     return (
         <div className={styles.grid}>
             {threads.map((thread) => (

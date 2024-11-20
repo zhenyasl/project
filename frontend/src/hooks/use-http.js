@@ -1,52 +1,52 @@
-import { useReducer, useCallback } from 'react';
+import { useReducer, useCallback } from "react";
 
 function httpReducer(httpState, action) {
     switch (action.type) {
-        case 'send_request': {
+        case "send_request": {
             return {
                 data: null,
                 error: null,
-                status: 'pending',
+                status: "pending",
             };
         }
-        case 'success': {
+        case "success": {
             return {
                 data: action.data,
                 error: null,
-                status: 'completed',
+                status: "completed",
             };
         }
-        case 'error': {
+        case "error": {
             return {
                 data: null,
                 error: action.errorMessage,
-                status: 'completed',
+                status: "completed",
             };
         }
         default: {
-            throw Error('Unknown action: ' + action.type);
+            throw Error("Unknown action: " + action.type);
         }
     }
 }
-//зверху function httpReducer(httpState, action) { . . . }
+
 function useHttp(sendRequest, isRequestSending = false) {
     const initialHttpState = {
         data: null,
         error: null,
-        status: isRequestSending ? 'pending' : null,
+        status: isRequestSending ? "pending" : null,
     };
     const [httpState, dispatch] = useReducer(httpReducer, initialHttpState);
 
     const sendHttpRequest = useCallback(
         async function (requestData) {
-            dispatch({ type: 'send_request' });
+            dispatch({ type: "send_request" });
             try {
                 const responseData = await sendRequest(requestData);
-                dispatch({ type: 'success', data: responseData });
+                dispatch({ type: "success", data: responseData });
             } catch (error) {
                 dispatch({
-                    type: 'error',
-                    errorMessage: error.message || 'Something went wrong!',
+                    type: "error",
+                    errorMessage: error.message || "Something went wrong!",
                 });
                 //throw new Error('It was error');
             }

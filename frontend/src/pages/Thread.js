@@ -1,25 +1,24 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
-import useHttp from '../hooks/use-http';
+import React, { Fragment, useState, useEffect, useRef } from "react";
+import useHttp from "../hooks/use-http";
 import {
     addPost,
     getPosts,
     getThread,
     deleteThread,
-} from '../utils/database-api';
-import styles from './Home.module.css';
-import { useParams, useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-import ThreadList from '../components/threads/ThreadList';
-import PostList from '../components/posts/PostList';
-    
+} from "../utils/database-api";
+import styles from "./Home.module.css";
+import { useParams, useNavigate } from "react-router-dom";
+import ThreadList from "../components/threads/ThreadList";
+import PostList from "../components/posts/PostList";
+
 const Thread = (props) => {
     const [isCreatePostVisible, setCreatePostVisible] = useState(false);
     const [isCreateCommentVisible, setCreateCommentVisible] = useState(false);
-    const [newPost, setNewPost] = useState('');
-    const [newComment, setNewComment] = useState('');
-    const user = localStorage.getItem('name');
-    //const userId = localStorage.getItem('id');
-    const { threadId } = useParams();   console.log(threadId);
+    const [newPost, setNewPost] = useState("");
+    const [newComment, setNewComment] = useState("");
+    const user = localStorage.getItem("name");
+    const { threadId } = useParams();
+    console.log(threadId);
     const navigate = useNavigate();
 
     const {
@@ -40,7 +39,8 @@ const Thread = (props) => {
         data: addedPost,
     } = useHttp(addPost);
 
-    const { sendHttpRequest: sendHttpRequestDeleteThread } = useHttp(deleteThread);
+    const { sendHttpRequest: sendHttpRequestDeleteThread } =
+        useHttp(deleteThread);
 
     useEffect(() => {
         sendHttpRequestGetPosts(threadId);
@@ -51,22 +51,8 @@ const Thread = (props) => {
 
     const inputRef = useRef(null);
 
-
     useEffect(() => {
-        if (getThreadStatus === 'completed' && loadedThread) {
-            console.log('getThreadStatus completed');
-            //console.log(loadedThread);
-        }
-    }, [getThreadStatus]);
-
-    useEffect(() => {
-        if (status === 'completed') {
-            //console.log(loadedPosts);
-        }
-    }, [status]);
-
-    useEffect(() => {
-        if (statusAdd === 'completed') {
+        if (statusAdd === "completed") {
             console.log(addedPost);
             updatePostsList();
         }
@@ -76,21 +62,21 @@ const Thread = (props) => {
         setCreatePostVisible(!isCreatePostVisible);
 
         if (!isCreatePostVisible) {
-            setNewPost('');
+            setNewPost("");
         }
     };
     const toggleCreateComment = () => {
         setCreateCommentVisible(!isCreateCommentVisible);
-        
+
         if (!isCreateCommentVisible) {
-            setNewComment('');
+            setNewComment("");
         }
     };
     useEffect(() => {
         if (isCreateCommentVisible && inputRef.current) {
-          inputRef.current.focus();  
+            inputRef.current.focus();
         }
-      }, [isCreateCommentVisible]); 
+    }, [isCreateCommentVisible]);
 
     const HandleDeleteThread = () => {
         const thread = {
@@ -98,24 +84,24 @@ const Thread = (props) => {
         };
         sendHttpRequestDeleteThread(thread)
             .then(() => {
-                navigate('/');
+                navigate("/");
             })
             .catch((error) => {
-                console.error('Error deleting post:', error);
+                console.error("Error deleting post:", error);
             });
     };
 
     const handleCreatePost = () => {
         if (!user) {
-            alert('You have to be authorized to create a comment');
+            alert("You have to be authorized to create a comment");
             return;
         }
         const post = {
             content: newComment,
             thread_id: threadId,
-            username : user
+            username: user,
         };
-        console.log('post');
+        console.log("post");
         console.log(post);
         sendHttpRequestAddPost(post);
 
@@ -129,25 +115,37 @@ const Thread = (props) => {
     console.log("loaded thread:", loadedThread);
     return (
         <Fragment>
-            {status === 'completed' && getThreadStatus === 'completed' && (
+            {status === "completed" && getThreadStatus === "completed" && (
                 <div>
-                    <div >
+                    <div>
                         <ThreadList threads={[loadedThread]} />
                     </div>
 
                     <div className={styles.commentFormContainer}>
-                        {isCreateCommentVisible  ? (
+                        {isCreateCommentVisible ? (
                             <div className={styles.expandedForm}>
                                 <textarea
                                     value={newComment}
-                                    onChange={(e) => setNewComment(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewComment(e.target.value)
+                                    }
                                     placeholder="Add a comment..."
                                     className={styles.commentInputExpanded}
                                     ref={inputRef}
                                 />
                                 <div className={styles.buttonContainer}>
-                                    <button onClick={toggleCreateComment} className={styles.cancelButton}>Cancel</button>
-                                    <button onClick={handleCreatePost} className={styles.submitButton}>Comment</button>
+                                    <button
+                                        onClick={toggleCreateComment}
+                                        className={styles.cancelButton}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleCreatePost}
+                                        className={styles.submitButton}
+                                    >
+                                        Comment
+                                    </button>
                                 </div>
                             </div>
                         ) : (
@@ -157,7 +155,7 @@ const Thread = (props) => {
                                 className={styles.commentInput}
                                 onClick={toggleCreateComment}
                             />
-                        ) }
+                        )}
                     </div>
                     {isCreatePostVisible && (
                         <div className={styles.createPostBlock}>
@@ -183,10 +181,7 @@ const Thread = (props) => {
                         </div>
                     )}
 
-                    <PostList
-                        posts={loadedPosts}
-                        onUpdate={updatePostsList}
-                    />
+                    <PostList posts={loadedPosts} onUpdate={updatePostsList} />
                 </div>
             )}
         </Fragment>

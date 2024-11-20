@@ -1,15 +1,14 @@
-import React from 'react';
-import CommentItem from './CommentItem';
-import styles from '../comments/Comments.module.css';
+import React from "react";
+import CommentItem from "./CommentItem";
+import styles from "../comments/Comments.module.css";
 
 const CommentList = ({ comments, onUpdate, level = 0 }) => {
-
     const handleCommentDelete = () => {
         onUpdate();
     };
     console.log(comments);
     return (
-        <div >
+        <div>
             {comments.map((comment) => (
                 <CommentItem
                     key={comment._id}
@@ -19,7 +18,7 @@ const CommentList = ({ comments, onUpdate, level = 0 }) => {
                     postDate={comment.post_date}
                     repliedTitle={comment.replied_title}
                     onDelete={handleCommentDelete}
-                    level = {level}
+                    level={level}
                 />
             ))}
         </div>

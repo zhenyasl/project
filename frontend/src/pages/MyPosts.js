@@ -1,14 +1,13 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
-import ThreadList from '../components/threads/ThreadList';
-import useHttp from '../hooks/use-http';
-import { getUserThreadsByName } from '../utils/database-api';
-import { useParams } from 'react-router-dom';
-import styles from './Home.module.css';
-import UserContext from '../context/UserContext';
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import ThreadList from "../components/threads/ThreadList";
+import useHttp from "../hooks/use-http";
+import { getUserThreadsByName } from "../utils/database-api";
+import { useParams } from "react-router-dom";
+import styles from "./Home.module.css";
+import UserContext from "../context/UserContext";
 
 const MyPosts = () => {
-    //const { user, updateUser } = useContext(UserContext);
-    const username = localStorage.getItem('name');
+    const username = localStorage.getItem("name");
     const {
         sendHttpRequest: getPostsRequest,
         status,
@@ -16,22 +15,27 @@ const MyPosts = () => {
     } = useHttp(getUserThreadsByName);
 
     useEffect(() => {
-        console.log('user name :', username);
+        console.log("user name :", username);
         getPostsRequest(username);
     }, []);
 
-    useEffect(() => {
-        if (status === 'completed') {
-            //console.log(status);
-            console.log(loadedThreads);
-        }
-    }, [status]);
-
     return (
         <Fragment>
-            <div style={{display : 'flex', marginBottom : '-10px', fontSize : 'larger', marginLeft : '400px', marginBottom : '-50px', marginTop : '3    0px'}}> <strong> My Threads</strong> </div>
+            <div
+                style={{
+                    display: "flex",
+                    marginBottom: "-10px",
+                    fontSize: "larger",
+                    marginLeft: "400px",
+                    marginBottom: "-50px",
+                    marginTop: "3 0px",
+                }}
+            >
+                {" "}
+                <strong> My Threads</strong>{" "}
+            </div>
             {/* <hr></hr> */}
-            {status === 'completed' && loadedThreads.length !== 0 && (
+            {status === "completed" && loadedThreads.length !== 0 && (
                 <ThreadList threads={loadedThreads} />
             )}
         </Fragment>

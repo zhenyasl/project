@@ -1,11 +1,11 @@
-const DATABASE_ROOT_DOMAIN = 'http://localhost:3000';
+const DATABASE_ROOT_DOMAIN = "http://localhost:3000";
 
 export async function getThreads() {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/threads`); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/threads`);
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Threads fetching error.');
+        throw new Error(data.message || "Threads fetching error.");
     }
 
     const convertedThreads = [];
@@ -23,13 +23,11 @@ export async function getThreads() {
 }
 
 export async function getThread(threadId) {
-    const response = await fetch(
-        `${DATABASE_ROOT_DOMAIN}/threads/${threadId}`
-    );
+    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/threads/${threadId}`);
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Thread fetching error.');
+        throw new Error(data.message || "Thread fetching error.");
     }
 
     // const convertedThreads = [];
@@ -54,7 +52,7 @@ export async function getUserThreads(userId) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     const convertedThreads = [];
@@ -74,11 +72,11 @@ export async function getUserThreads(userId) {
 export async function getUserThreadsByName(username) {
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/threads/username/${username}`
-    ); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    );
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     const convertedThreads = [];
@@ -99,10 +97,10 @@ export async function getFilteredThreads(searchText) {
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/threads/search/search`,
         {
-            method: 'POST',
+            method: "POST",
             body: JSON.stringify({ search: searchText }),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
         }
     );
@@ -110,7 +108,7 @@ export async function getFilteredThreads(searchText) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Threads fetching error.');
+        throw new Error(data.message || "Threads fetching error.");
     }
 
     const convertedThreads = [];
@@ -128,15 +126,15 @@ export async function getFilteredThreads(searchText) {
 }
 
 export async function deleteThread(ThreadData) {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
 
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/threads/${ThreadData.thread_Id}`,
         {
-            method: 'DELETE',
+            method: "DELETE",
             body: JSON.stringify(ThreadData),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: token,
             },
         }
@@ -144,43 +142,41 @@ export async function deleteThread(ThreadData) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.text || 'Thread deleting error.');
+        throw new Error(data.text || "Thread deleting error.");
     }
     return data;
 }
 
 export async function addThread(ThreadData) {
-    const token = localStorage.getItem('authToken');
-    // console.log(localStorage.getItem('authToken'));
-    // console.log(PostData);
+    const token = localStorage.getItem("authToken");
+
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/threads`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(ThreadData),
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: token,
         },
     });
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Thread adding error.');
+        throw new Error(data.message || "Thread adding error.");
     }
 
     return data;
 }
 
 export async function getPost(userId) {
-    
     return 0;
 }
 
 export async function getPosts(threadId) {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/${threadId}`); 
+    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts/${threadId}`);
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Threads fetching error.');
+        throw new Error(data.message || "Threads fetching error.");
     }
 
     const convertedPosts = [];
@@ -197,15 +193,14 @@ export async function getPosts(threadId) {
     return convertedPosts;
 }
 
-
 export async function getUserPosts(userId) {
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/posts/user/${userId}`
-    ); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    );
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     const convertedPosts = [];
@@ -225,11 +220,11 @@ export async function getUserPosts(userId) {
 export async function getUserPostsByName(username) {
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/posts/username/${username}`
-    ); //всі пости поки прикріплені до 2го треду, поки проект не масштабований і тредів немає
+    );
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     const convertedPosts = [];
@@ -248,31 +243,31 @@ export async function getUserPostsByName(username) {
 
 export async function addUser(UserData) {
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/auth/register`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(UserData),
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
     });
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Post adding error.');
+        throw new Error(data.message || "Post adding error.");
     }
 }
 
 export async function login(UserData) {
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/auth/login`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(UserData),
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
     });
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Post adding error.');
+        throw new Error(data.message || "Post adding error.");
     }
     return data;
 }
@@ -288,6 +283,7 @@ export async function login(UserData) {
 
 //     // return data;
 // }
+
 export async function getUserComments(username) {
     console.log(username);
     const response = await fetch(
@@ -296,7 +292,7 @@ export async function getUserComments(username) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     const convertedComments = [];
@@ -314,68 +310,65 @@ export async function getUserComments(username) {
 }
 
 export async function getId(login) {
-    //console.log(id);
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/username/${login}`);
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Posts fetching error.');
+        throw new Error(data.message || "Posts fetching error.");
     }
 
     return data;
 }
 
 export async function addPost(PostData) {
-    const token = localStorage.getItem('authToken');
-    console.log(localStorage.getItem('authToken'));
+    const token = localStorage.getItem("authToken");
+    console.log(localStorage.getItem("authToken"));
     console.log(PostData);
     const response = await fetch(`${DATABASE_ROOT_DOMAIN}/posts`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(PostData),
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: token,
         },
     });
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Post adding error.');
+        throw new Error(data.message || "Post adding error.");
     }
 
     return data;
 }
 
 export async function addComment(CommentData) {
-    const token = localStorage.getItem('authToken');
-    // console.log(CommentData);
-    // console.log(localStorage.getItem('authToken'));
-    const response = await fetch(
-        `${DATABASE_ROOT_DOMAIN}/comments`,
-        {
-            method: 'POST',
-            body: JSON.stringify(CommentData),
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: token,
-            },
-        }
-    );
+    const token = localStorage.getItem("authToken");
+
+    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/comments`, {
+        method: "POST",
+        body: JSON.stringify(CommentData),
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+        },
+    });
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.text || 'Comment adding error.');
+        throw new Error(data.text || "Comment adding error.");
     }
     return data;
 }
 
 export async function getComments(postId) {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/comments/post/${postId}`);
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/comments/post/${postId}`
+    );
 
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Comments fetching error.');
+        throw new Error(data.message || "Comments fetching error.");
     }
 
     const convertedComments = [];
@@ -393,12 +386,14 @@ export async function getComments(postId) {
 }
 
 export async function getRepliedComments(commentId) {
-    const response = await fetch(`${DATABASE_ROOT_DOMAIN}/comments/replied/${commentId}`);
+    const response = await fetch(
+        `${DATABASE_ROOT_DOMAIN}/comments/replied/${commentId}`
+    );
 
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Comments fetching error.');
+        throw new Error(data.message || "Comments fetching error.");
     }
 
     const convertedComments = [];
@@ -416,15 +411,15 @@ export async function getRepliedComments(commentId) {
 }
 
 export async function deleteComment(CommentData) {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
 
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/comments/${CommentData.comment_Id}`,
         {
-            method: 'DELETE',
+            method: "DELETE",
             body: JSON.stringify(CommentData),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: token,
             },
         }
@@ -432,21 +427,21 @@ export async function deleteComment(CommentData) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.text || 'Comment adding error.');
+        throw new Error(data.text || "Comment adding error.");
     }
     return data;
 }
 
 export async function deletePost(PostData) {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     console.log(PostData);
     const response = await fetch(
         `${DATABASE_ROOT_DOMAIN}/posts/${PostData.post_Id}`,
         {
-            method: 'DELETE',
+            method: "DELETE",
             body: JSON.stringify(PostData),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: token,
             },
         }
@@ -454,7 +449,7 @@ export async function deletePost(PostData) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.text || 'Comment adding error.');
+        throw new Error(data.text || "Comment adding error.");
     }
     return data;
 }

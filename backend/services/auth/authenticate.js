@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
     const token = req.headers.authorization;
     if (!token) {
-        return res.status(401).send('Access denied. No token provided.');
+        return res.status(401).send("Access denied. No token provided.");
     }
 
     try {
@@ -11,8 +11,8 @@ const authenticate = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (ex) {
-        console.log('invalid token');
-        res.status(400).send('Invalid token.');
+        console.log("invalid token");
+        res.status(400).send("Invalid token.");
     }
 };
 

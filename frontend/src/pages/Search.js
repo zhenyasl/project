@@ -1,27 +1,33 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
-import ThreadList from '../components/threads/ThreadList';
-import useHttp from '../hooks/use-http';
-import { getThreads, addThread, getFilteredThreads } from '../utils/database-api';
-import styles from './Home.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { mainActions } from '../store/main-slice'
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import ThreadList from "../components/threads/ThreadList";
+import useHttp from "../hooks/use-http";
+import {
+    getThreads,
+    addThread,
+    getFilteredThreads,
+} from "../utils/database-api";
+import styles from "./Home.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { mainActions } from "../store/main-slice";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Search = () => {
-    const { search } = useParams(); //console.log(search);
+    const { search } = useParams();
 
     const dispatchAction = useDispatch();
-    const isCreateThreadVisible = useSelector((state) => state.main.isCreatePostVisible);
+    const isCreateThreadVisible = useSelector(
+        (state) => state.main.isCreatePostVisible
+    );
     // const filter = useSelector((state) => state.main.filter); console.log(filter);
 
-    const [newThreadTitle, setNewThreadTitle] = useState('');
+    const [newThreadTitle, setNewThreadTitle] = useState("");
 
     const [isDisabled, setIsDisabled] = useState(true);
-    const user = localStorage.getItem('name');
-    
+    const user = localStorage.getItem("name");
+
     const {
         sendHttpRequest: getFilteredThreadsRequest,
-        status : statusFiltered,
+        status: statusFiltered,
         data: loadedFilteredThreads,
     } = useHttp(getFilteredThreads);
 
@@ -30,53 +36,42 @@ const Search = () => {
         status: statusAdd,
         data: thread_id,
     } = useHttp(addThread);
-    
+
     useEffect(() => {
         dispatchAction(mainActions.setNewFilter(search));
-
     }, [search]);
 
     useEffect(() => {
         getFilteredThreadsRequest(search);
-
     }, [search]);
-    
-    // useEffect(() => {
-    //     dispatchAction(mainActions.setNewFilter(null));
-    // }, );
-
 
     useEffect(() => {
         setNewThreadTitle(" ");
     }, [isCreateThreadVisible]);
 
     const toggleCreateThread = () => {
-        // setCreateThreadVisible(!isCreateThreadVisible);
-        // if (!isCreateThreadVisible) {
-        //     setNewThreadTitle('');
-        // }
         dispatchAction(mainActions.toggleCreatePostVisibility());
     };
 
     const handleCreateThread = async () => {
         const thread = {
             content: newThreadTitle,
-            username : user,
+            username: user,
         };
 
-        const authToken = localStorage.getItem('authToken');
+        const authToken = localStorage.getItem("authToken");
 
         if (!authToken) {
-            alert('You should be authorized to create post');
+            alert("You should be authorized to create post");
             return;
         }
-        console.log('sending thread');
+        console.log("sending thread");
         await sendHttpRequestAddThread(thread)
             .then(() => {
                 window.location.reload();
             })
             .catch((error) => {
-                console.error('Error deleting comment:', error);
+                console.error("Error deleting comment:", error);
             });
 
         dispatchAction(mainActions.toggleCreatePostVisibility());
@@ -94,8 +89,10 @@ const Search = () => {
                         className={styles.inputField}
                     />
                     <button
-                        className={`btn ${!newThreadTitle ? 'btn-light' : 'btn-primary'} ${styles.submitButton}`}
-                        disabled={!newThreadTitle} 
+                        className={`btn ${
+                            !newThreadTitle ? "btn-light" : "btn-primary"
+                        } ${styles.submitButton}`}
+                        disabled={!newThreadTitle}
                         onClick={handleCreateThread}
                     >
                         Send
@@ -108,10 +105,23 @@ const Search = () => {
                     </button>
                 </div>
             )}
-            <div style={{display : 'flex', marginBottom : '-10px', fontSize : 'larger', marginLeft : '400px', marginBottom : '-50px', marginTop : '30px'}}> Results of search "<strong> {search}</strong>" </div>
-            {statusFiltered === 'completed' && loadedFilteredThreads.length !== 0  && (
-                <ThreadList threads={loadedFilteredThreads} />
-            )}
+            <div
+                style={{
+                    display: "flex",
+                    marginBottom: "-10px",
+                    fontSize: "larger",
+                    marginLeft: "400px",
+                    marginBottom: "-50px",
+                    marginTop: "30px",
+                }}
+            >
+                {" "}
+                Results of search "<strong> {search}</strong>"{" "}
+            </div>
+            {statusFiltered === "completed" &&
+                loadedFilteredThreads.length !== 0 && (
+                    <ThreadList threads={loadedFilteredThreads} />
+                )}
         </Fragment>
     );
 };
