@@ -1,0 +1,75 @@
+.navbar {
+    height: 56px;
+    background-color:#F0F8FF; /* Темносеросиний фон */
+    display: flex;
+    /* justify-content: center; Центрирование элементов */
+    /* align-items: center; */
+    border-bottom: 1px solid #ccc;
+}
+.createPostButton {
+    position: absolute;
+    left: 280px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    font-size: 25px;
+    /* border-radius: 5px; */
+    border: 1px solid #ddd;
+    margin-left: 250px;
+    /* margin-bottom: 35px;
+    margin-top: 5px;
+    padding: 0px 5px; */
+    border-radius: 35px;
+    transition: background-color 0.3s ease; /* Плавный переход */
+    cursor: pointer;
+    display: flex; /* Чтобы поддерживать flexbox */
+    align-items: center; /* Центрирование по вертикали */
+     /*Центрирование по горизонтали, если нужно */
+    /* width:115px;
+    height:50px; */
+}
+.createPostButton:hover, .createPostButton:focus-within {
+    background-color: #d3d3d3; /* Изменение цвета при наведении */
+}
+.navbarNav {
+    display: flex;
+    align-items: center;
+    margin : 0px;
+    padding: 0;
+    margin-left:auto;
+}
+
+.navLink {
+    text-decoration: none;
+    color: rgb(0, 0, 0); /* Белый цвет для текста кнопок */
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 15px;
+    /* border-color: #1e14ac; */
+    transition: background-color 0.3s;
+}
+
+.navLink:hover {
+    background-color: #1e14ac;
+    color: rgb(255, 255, 255);
+    border-color: #ce114a;
+}
+
+.logoutButton {
+    background-color: #cb8188;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    background-color: #b13340;
+}
+
+.logoutButtonContainer {
+    margin-left: 1rem;
+}
